@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             targetNamespace="http://example.com/numbers"
+             name="NumbersService">
+    <types>
+        <xsd:schema targetNamespace="http://example.com/numbers">
+            <xsd:complexType name="ArrayOfInt">
+                <xsd:sequence>
+                    <xsd:element name="number" type="xsd:int" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="AddNumbersRequest">
+        <part name="numbers" type="tns:ArrayOfInt"/>
+    </message>
+    <message name="AddNumbersResponse">
+        <part name="result" type="xsd:int"/>
+    </message>
+    <message name="AverageNumbersRequest">
+        <part name="numbers" type="tns:ArrayOfInt"/>
+    </message>
+    <message name="AverageNumbersResponse">
+        <part name="result" type="xsd:double"/>
+    </message>
+    <portType name="NumbersPortType">
+        <operation name="AddNumbers">
+            <input message="tns:AddNumbersRequest"/>
+            <output message="tns:AddNumbersResponse"/>
+        </operation>
+        <operation name="AverageNumbers">
+            <input message="tns:AverageNumbersRequest"/>
+            <output message="tns:AverageNumbersResponse"/>
+        </operation>
+    </portType>
+    <binding name="NumbersBinding" type="tns:NumbersPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="AddNumbers">
+            <soap:operation soapAction="http://example.com/numbers/AddNumbers"/>
+            <input>
+                <soap:body use="encoded" namespace="http://example.com/numbers" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="http://example.com/numbers" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="AverageNumbers">
+            <soap:operation soapAction="http://example.com/numbers/AverageNumbers"/>
+            <input>
+                <soap:body use="encoded" namespace="http://example.com/numbers" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="http://example.com/numbers" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="NumbersService">
+        <port name="NumbersPort" binding="tns:NumbersBinding">
+            <soap:address location="http://example.com/numbers"/>
+        </port>
+    </service>
+</definitions>
