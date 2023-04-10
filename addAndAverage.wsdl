@@ -58,7 +58,7 @@
     </binding>
     <service name="NumbersService">
         <port name="NumbersPort" binding="tns:NumbersBinding">
-            <soap:address location="http://example.com/numbers"/>
+            <soap:address location="https://raw.githubusercontent.com/joel-wilhelms/webservices/main/addAndAverage.wsdl">
         </port>
     </service>
 </definitions>
